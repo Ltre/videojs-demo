@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://assets.dwstatic.com/b=common/js&f=jquery-1.11.1.min.js,jquery-migrate-1.2.1.min.js&20141230"></script>
+    <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <script src="http://vjs.zencdn.net/4.12/video.js"></script>
+    <style type="text/css">
+        #video-area{
+            position: relative;
+            overflow: hidden;
+        }
+        .ctrl-layer{
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            width: 800px;
+            height: 445px;
+            background-color: transparent;
+            /*background-color: rgba(100,200,100,0.5);*/
+        }
+    </style>
+</head>
+<body>
+
+
+<video id="really-cool-video" class="video-js vjs-default-skin" controls
+       preload="auto" width="640" height="264" poster="really-cool-video-poster.jpg"
+       data-setup='{}'>
+    <source src="http://w5.dwstatic.com/1/6/1514/109082-99-20150402172249.mp4" type='video/mp4'>
+    <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a web browser
+        that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+</video>
+
+
+<script>
+
+
+    var player = videojs('really-cool-video', { /* Options */ }, function() {
+        console.log('Good to go!');
+
+        this.play(); // if you don't trust autoplay for some reason
+
+        // How about an event listener?
+        this.on('ended', function() {
+            console.log('awww...over so soon?');
+        });
+    });
+
+    console.log(player);
+
+</script>
+
+</body>
+</html>
