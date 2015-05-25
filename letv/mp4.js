@@ -5,7 +5,7 @@ define(function(require) {
 	var ua = require("./ua");
 
 	// code from http://yuntv.letv.com/player_v2.4.js?V1
-	function -decode(c) {
+	function decode(c) {
 		var d, a, b, e, h, k = 0, g = 0;
 		e = "";
 		var j = [];
