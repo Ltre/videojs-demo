@@ -32,7 +32,7 @@
 		},
 
 		onLoadstart: function(){
-			alert('onLoadstart')
+			alert('loadstart')
 		},
 
 		onSuspend: function(){

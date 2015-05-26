@@ -42,7 +42,7 @@
 		return result;
 	}
 
-
+	//Main Function
 	exports.run = function(){
 		if (UA.ios || UA.android) {
 			$.each(getFlash(), function(i, o) {
@@ -57,6 +57,9 @@
 						.on('pause', MP4.onPause)
 						.on('loadstart', MP4.onLoadstart)
 						.on('suspend', MP4.onSuspend)
+						.on('progress', MP4.onProgress)
+						.on('timeupdate', MP4.onTimeupdate)
+						.on('error', MP4.onError);
 				});
 
 			});
