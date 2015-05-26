@@ -1,6 +1,4 @@
-﻿/// <reference path="../../_intellisense/_main.js" />
-
-define(function(require, exports) {
+﻿define(function(require, exports) {
 	var $ = require("jquery");
 	var UA = require("./ua"), MP4 = require("./mp4");
 
@@ -18,8 +16,7 @@ define(function(require, exports) {
 				}
 				result.push({
 					jq: jqFlash,
-					uu: vals.uu,
-					vu: vals.vu
+					vid: vals.vid
 				});
 			}
 		}
@@ -50,12 +47,18 @@ define(function(require, exports) {
 		if (UA.ios || UA.android) {
 			$.each(getFlash(), function(i, o) {
 				MP4.getSource({
-					vu: o.vu,
-					uu: o.uu
+					vid: o.vid
 				}, function(src) {
 					var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
-					jqFlash.replaceWith('<video width="' + width + '" height="' + height + '" preload="meta" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+					var id = (new Date().getUTCMilliseconds() + '_' + o.vid);
+					jqFlash.replaceWith('<video id="' + id + '" width="' + width + '" height="' + height + '" preload="meta" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+					$('#'+id)
+						.on('play', MP4.onPlay)
+						.on('pause', MP4.onPause)
+						.on('loadstart', MP4.onLoadstart)
+						.on('suspend', MP4.onSuspend)
 				});
+
 			});
 		}
 	};

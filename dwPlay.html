@@ -6,19 +6,24 @@
 </head>
 <body>
 
+<!-- lol.duowan.com -->
+<div style="float:left;">
+    <object align="middle" width="640" height="360" id="test_1432624917557" type="application/x-shockwave-flash" data="http://assets.dwstatic.com/video/vpp.swf" style="visibility: visible;"><param name="quality" value="high"><param name="bgcolor" value="0"><param name="allowfullscreen" value="true"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param name="flashvars" value="uu=a04808d307&amp;vu=1e90d498f6&amp;pu=&amp;auto_play=0&amp;width=610&amp;height=498&amp;videoId=143256990984655082&amp;no_recommend=&amp;no_danmu=&amp;channelId=lol&amp;stop_cb=&amp;vid=121272&amp;from="></object><span class="floatable-popup-btn" title="浮动该视频，浮动后可自由调整视频大小" style="top: 619px; left: 1070.5px; display: none;"><span class="floatable-icon-popup"></span></span>
+</div>
 
+<!-- v.huya.com -->
+<div style="float:left;">
+    <embed src="http://assets.dwstatic.com/video/vppp.swf" allowfullscreen="true" quality="high" height="360" width="640" align="middle" allowscriptaccess="always" flashvars="uu=a04808d307&amp;vu=1e90d498f6&amp;auto_play=1&amp;sdk=dw&amp;vid=121272&amp;logo=huya&amp;no_danmu=1&amp;from=huya" type="application/x-shockwave-flash" style="display: block !important; z-index:-1" wmode="transparent">
+</div>
 
-<script src="./dwplay/sea.js"></script>
+<!-- v.duowan.com -->
+<div style="float: left;">
+    <object align="middle" width="640" height="360" id="test_1432627947970" type="application/x-shockwave-flash" data="http://assets.dwstatic.com/video/vpp.swf" style="visibility: visible;"><param name="quality" value="high"><param name="bgcolor" value="0"><param name="allowfullscreen" value="true"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="always"><param name="flashvars" value="uu=a04808d307&amp;vu=bf0c920cbb&amp;pu=&amp;auto_play=0&amp;width=640&amp;height=520&amp;videoId=143131332133368185&amp;no_recommend=&amp;no_danmu=&amp;channelId=&amp;stop_cb=&amp;vid=&amp;from="></object>
+</div>
+
+<script src="http://assets.dwstatic.com/amkit/entry.js"></script>
 <script>
-    seajs.config({
-        base: './dwplay/',
-        alias: {
-            jquery: 'jquery-1.11.1.min.js',
-            f2v: 'flash2video.js'
-        }
-    });
-
-    seajs.use('f2v', function(F2V){
+    seajs.use(['./dwplay/flash2video'], function(F2V){
         F2V.run();
     });
 </script>
