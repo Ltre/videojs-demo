@@ -1,6 +1,4 @@
-﻿/// <reference path="../../_intellisense/_main.js" />
-
-define(function() {
+﻿define(function() {
 	var userAgent = window.navigator.userAgent.toLowerCase();
 
 	var iphone = /iphone/.test(userAgent);

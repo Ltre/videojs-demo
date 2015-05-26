@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+
+<script src="./dwplay/sea.js"></script>
+<script>
+    seajs.config({
+        base: './dwplay/',
+        alias: {
+            jquery: 'jquery-1.11.1.min.js',
+            f2v: 'flash2video.js'
+        }
+    });
+
+    seajs.use('f2v', function(F2V){
+        F2V.run();
+    });
+</script>
+
+</body>
+</html>

@@ -1,6 +1,9 @@
 <!-- <script src="http://assets.dwstatic.com/amkit/entry.js" data-entry="p/search/bdsug-main"></script> -->
 <!-- <script src="http://assets.dwstatic.com/amkit/entry.js" data-entry="p/livetip/1.1.0/main"></script> -->
-<script src="http://assets.dwstatic.com/amkit/entry.js" data-entry="p/footer/main"></script>
+<!--<script src="http://assets.dwstatic.com/amkit/entry.js" data-entry="p/footer/main"></script>-->
+
+
+<script src="http://assets.dwstatic.com/amkit/entry.js"></script>
 <script>
 /*    seajs.use(["p/letv/flash2video", "jquery", "p/letv/ua", "p/letv/mp4"], function(t, $, u, m){
         console.log([t, $, u, m]);
@@ -9,12 +12,7 @@
 /// <reference path="../../_intellisense/_main.js" />
 
 
-
-
-
-define(function(require, exports) {
-    var $ = require("jquery");
-    var UA = require("./ua"), MP4 = require("./mp4");
+seajs.use(['gallery/jquery/1.11.1/jquery', 'p/letv/ua', 'p/letv/mp4'], function($, UA, MP4){
 
     function getLetvFlash() {
         var result = [];
@@ -58,23 +56,21 @@ define(function(require, exports) {
     }
 
 
-    exports.replace = function(){
-        if (UA.ios || UA.android) {
-            $.each(getLetvFlash(), function(i, o) {
-                MP4.getSource({
-                    vu: o.vu,
-                    uu: o.uu
-                }, function(src) {
-                    var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
-                    jqFlash.replaceWith('<video width="' + width + '" height="' + height + '" preload="meta" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
-                });
+
+    if (UA.ios || UA.android) {
+        $.each(getLetvFlash(), function(i, o) {
+            MP4.getSource({
+                vu: o.vu,
+                uu: o.uu
+            }, function(src) {
+                console.log(src);
+                var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
+                jqFlash.replaceWith('<video width="' + width + '" height="' + height + '" preload="meta" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
             });
-        }
-    };
+        });
+    }
 
 });
-
-
 
 
 </script>
