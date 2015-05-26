@@ -48,18 +48,18 @@
 			$.each(getFlash(), function(i, o) {
 				MP4.getSource({
 					vid: o.vid
-				}, function(src) {
+				}, function(src, cover) {
 					var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
 					var id = (new Date().getUTCMilliseconds() + '_' + o.vid);
-					jqFlash.replaceWith('<video id="' + id + '" width="' + width + '" height="' + height + '" preload="meta" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+					jqFlash.replaceWith('<video id="' + id + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
 					$('#'+id)
-						.on('play', MP4.onPlay)
-						.on('pause', MP4.onPause)
-						.on('loadstart', MP4.onLoadstart)
-						.on('suspend', MP4.onSuspend)
-						.on('progress', MP4.onProgress)
-						.on('timeupdate', MP4.onTimeupdate)
-						.on('error', MP4.onError);
+						.on('play', function(evt){MP4.onPlay(evt, o.vid);})
+						.on('pause', function(evt){MP4.onPause(evt, o.vid);})
+						.on('loadstart', function(evt){MP4.onLoadstart(evt, o.vid);})
+						.on('suspend', function(evt){MP4.onSuspend(evt, o.vid);})
+						.on('progress', function(evt){MP4.onProgress(evt, o.vid);})
+						.on('timeupdate', function(evt){MP4.onTimeupdate(evt, o.vid);})
+						.on('error', function(evt){MP4.onError(evt, o.vid);});
 				});
 
 			});

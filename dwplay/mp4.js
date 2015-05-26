@@ -4,6 +4,7 @@
 
 	return {
 		cf: ua.ios ? "ios" : "html5", // "ios" | "html5"
+		evtBaseUrl: 'http://vstat.webdev.duowan.com/index.php?r=',
 
 		getSource: function(data, callback) {
 			if (! data) return;
@@ -15,41 +16,56 @@
 			}).done(function(d){
 				if (1 != d.code) return;
 				var last = d.result.items.pop();
+				var cover = d.result.cover;
 				if (last && callback) {
 					var src = last.transcode.urls.pop();
-					callback(src, data);
+					callback(src, cover, data);
 				}
 			});
 		},
 
-		onPlay: function(evt){
+		onPlay: function(evt, vid){
 			alert('play');
 			console.log(evt.currentTarget.readyState);
+			var url = this.evtBaseUrl + 'video/onPlay';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onPause: function(){
-			alert('pause')
+		onPause: function(evt, vid){
+			alert('pause');
+			var url = this.evtBaseUrl + 'video/onPause';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onLoadstart: function(){
-			alert('loadstart')
+		onLoadstart: function(evt, vid){
+			alert('loadstart');
+			var url = this.evtBaseUrl + 'video/onLoadstart';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onSuspend: function(){
-			console.log('suspend')
+		onSuspend: function(evt, vid){
+			console.log('suspend');
+			var url = this.evtBaseUrl + 'video/onSuspend';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onProgress: function(evt){
+		onProgress: function(evt, vid){
 			console.log('progress');
 			console.log(evt.currentTarget.readyState);
+			var url = this.evtBaseUrl + 'video/onProgress';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onTimeupdate: function(){
-			console.log('timeupdate')
+		onTimeupdate: function(evt, vid){
+			console.log('timeupdate');
+			var url = this.evtBaseUrl + 'video/onTimeupdate';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		},
 
-		onError: function(){
-			alert('error')
+		onError: function(evt, vid){
+			alert('error');
+			var url = this.evtBaseUrl + 'video/onError';
+			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
 		}
 
 	};
