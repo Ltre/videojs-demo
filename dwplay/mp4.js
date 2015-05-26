@@ -4,7 +4,16 @@
 
 	return {
 		cf: ua.ios ? "ios" : "html5", // "ios" | "html5"
-		evtBaseUrl: 'http://vstat.webdev.duowan.com/index.php?r=',
+
+		__buildReport: function(api, evt, vid, extra, fn){
+			var url = 'http://vstat.webdev.duowan.com/index.php?r=' + api;
+			var data = {
+				vid: vid,
+				moment: evt.currentTarget.currentTime
+			};
+			$.each(extra, function(i,e){ data[i] = e; });
+			$.get(url, data, fn, 'jsonp');
+		},
 
 		getSource: function(data, callback) {
 			if (! data) return;
@@ -27,45 +36,42 @@
 		onPlay: function(evt, vid){
 			alert('play');
 			console.log(evt.currentTarget.readyState);
-			var url = this.evtBaseUrl + 'video/onPlay';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			this.__buildReport('video/onPlay', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onPause: function(evt, vid){
 			alert('pause');
-			var url = this.evtBaseUrl + 'video/onPause';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			this.__buildReport('video/onPause', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onLoadstart: function(evt, vid){
+			window.vid=evt.currentTarget;
 			alert('loadstart');
-			var url = this.evtBaseUrl + 'video/onLoadstart';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			this.__buildReport('video/onLoadstart', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onSuspend: function(evt, vid){
 			console.log('suspend');
 			var url = this.evtBaseUrl + 'video/onSuspend';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			//this.__buildReport('video/onSuspend', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onProgress: function(evt, vid){
 			console.log('progress');
 			console.log(evt.currentTarget.readyState);
-			var url = this.evtBaseUrl + 'video/onProgress';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			//this.__buildReport('video/onProgress', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onTimeupdate: function(evt, vid){
 			console.log('timeupdate');
 			var url = this.evtBaseUrl + 'video/onTimeupdate';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			//this.__buildReport('video/onTimeupdate', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onError: function(evt, vid){
 			alert('error');
 			var url = this.evtBaseUrl + 'video/onError';
-			$.get(url, {vid:vid}, function(j){console.log(j)}, 'jsonp');
+			this.__buildReport('video/onError', evt, vid, {}, function(j){console.log(j);});
 		}
 
 	};

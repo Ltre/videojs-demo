@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ae9eeb57-7218-407e-9c82-54ebb4c264b7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dwplay/flash2video.js" afterPath="$PROJECT_DIR$/dwplay/flash2video.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/VideoController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dwplay/mp4.js" afterPath="$PROJECT_DIR$/dwplay/mp4.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -60,17 +60,27 @@
         <entry file="file://$PROJECT_DIR$/dwplay/flash2video.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="1406">
-              <caret line="61" column="73" selection-start-line="61" selection-start-column="73" selection-end-line="61" selection-end-column="73" />
+              <caret line="61" column="69" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="73" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mp4.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mp4.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dwplay/mp4.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4871795" vertical-offset="0" max-vertical-offset="1463">
-              <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1577">
+              <caret line="49" column="53" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VideoController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/VideoController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.040598292" vertical-offset="0" max-vertical-offset="1064">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -100,6 +110,7 @@
         <option value="$PROJECT_DIR$/dwPlay.html" />
         <option value="$PROJECT_DIR$/dwplay/flash2video.js" />
         <option value="$PROJECT_DIR$/dwplay/mp4.js" />
+        <option value="$PROJECT_DIR$/server/VideoController.php" />
       </list>
     </option>
   </component>
@@ -163,7 +174,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dwplay" />
+              <option name="myItemId" value="server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -295,7 +306,13 @@
       <option name="project" value="LOCAL" />
       <updated>1432641047742</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="加入统计代码">
+      <created>1432647364151</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1432647364151</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -343,7 +360,8 @@
     <MESSAGE value="exports" />
     <MESSAGE value="加入监控存根、调整目录" />
     <MESSAGE value="删除没用代码，注册好事件" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除没用代码，注册好事件" />
+    <MESSAGE value="加入统计代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入统计代码" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -611,15 +629,23 @@
     <entry file="file://$PROJECT_DIR$/dwplay/flash2video.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="1406">
-          <caret line="61" column="73" selection-start-line="61" selection-start-column="73" selection-end-line="61" selection-end-column="73" />
+          <caret line="61" column="69" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dwplay/mp4.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4871795" vertical-offset="0" max-vertical-offset="1463">
-          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1577">
+          <caret line="49" column="53" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/VideoController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.040598292" vertical-offset="0" max-vertical-offset="1064">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
           <folding />
         </state>
       </provider>
