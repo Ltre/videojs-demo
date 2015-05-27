@@ -18,6 +18,19 @@
             return ret;
         },
 
+        __getCookie: function(c_name){
+        　　if (document.cookie.length>0){
+        　　　　c_start = document.cookie.indexOf(c_name + "=");
+        　　　　if (c_start != -1){ 
+        　　　　　　c_start = c_start + c_name.length + 1;
+        　　　　　　c_end = document.cookie.indexOf(";", c_start);
+        　　　　　　if (c_end == -1) c_end = document.cookie.length;　　
+        　　　　　　return unescape(document.cookie.substring(c_start, c_end));
+        　　　　} 
+        　　}
+        　　return "";
+        },
+
         __reportHiido: function(act, evt, info, extra){
             extra = extra || {};
             var $video = $(evt.currentTarget);
@@ -31,7 +44,7 @@
                 vname: info.title,
                 time: new Date().valueOf(),
                 prevurl: window.location.origin,
-                ui: Math.random()
+                ui: this.__getCookie('hiido_ui') || Math.random()
             };
             $.each(extra, function(k,v){ args[k] = v; });
             url += ('?' + this.__serialize(args));
@@ -52,7 +65,8 @@
             };
             $.each(extra, function(k,v){ args[k] = v; });
             url += ('?' + this.__serialize(args));
-            $video.after('<iframe src="' + url + '" style="display:none;width:1px;height:1px;"><iframe>');
+            $video.after('<iframe src="' + url + '" style="display:none;width:1px;height:1px;"><iframe>');//适配text/html,不用script
+            //$.get(url, {}, fn, 'script');
         },
 
         getInfo: function(vid, callback){
@@ -98,8 +112,11 @@
 
         onLoadstart: function(evt, info){
             console.log('dwH5 loadstart');
-            this.__reportHiido('webduowanvideoload', evt, info);
-            this.__reportDwPlatform('play/load', evt, info);
+            var _this = this;
+            setTimeout(function(){
+                _this.__reportHiido('webduowanvideoload', evt, info);
+                _this.__reportDwPlatform('play/load', evt, info);
+            }, 250);//确保比getInfo()晚执行
         },
 
         onSuspend: function(evt, info){
