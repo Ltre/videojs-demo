@@ -24,10 +24,10 @@
 				data: data
 			}).done(function(d){
 				if (1 != d.code) return;
-				var last = d.result.items.pop();
+				var last = d.result.items.shift();
 				var cover = d.result.cover;
 				if (last && callback) {
-					var src = last.transcode.urls.pop();
+					var src = last.transcode.urls.shift();
 					callback(src, cover, data);
 				}
 			});
@@ -52,7 +52,6 @@
 
 		onSuspend: function(evt, vid){
 			console.log('suspend');
-			var url = this.evtBaseUrl + 'video/onSuspend';
 			//this.__buildReport('video/onSuspend', evt, vid, {}, function(j){console.log(j);});
 		},
 
@@ -64,13 +63,11 @@
 
 		onTimeupdate: function(evt, vid){
 			console.log('timeupdate');
-			var url = this.evtBaseUrl + 'video/onTimeupdate';
 			//this.__buildReport('video/onTimeupdate', evt, vid, {}, function(j){console.log(j);});
 		},
 
 		onError: function(evt, vid){
 			alert('error');
-			var url = this.evtBaseUrl + 'video/onError';
 			this.__buildReport('video/onError', evt, vid, {}, function(j){console.log(j);});
 		}
 
