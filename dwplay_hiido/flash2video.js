@@ -14,10 +14,20 @@
                 if (jqFlash.parent("object").length) {
                     jqFlash = jqFlash.parent("object").eq(0);
                 }
-                result.push({
+                var utilData = {
                     jq: jqFlash,
-                    vid: vals.vid
+                    vid: vals.vid,
+                    from: vals.from,
+                    uu: vals.uu,
+                    vu: vals.vu,
+                    channelId: vals.channelId
+                };
+                //需确认此处是否为同步获取
+                MP4.getInfo(vals.vid, function(info){
+                    utilData.title = info.title;
+                    utilData.channel_id = info.channel_id;//若接口有channel_id，则以此为准，否则以页面为准
                 });
+                result.push(utilData);
             }
         }
 
@@ -53,13 +63,13 @@
                     var id = (new Date().getUTCMilliseconds() + '_' + o.vid);
                     jqFlash.replaceWith('<video id="' + id + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
                     $('#'+id)
-                        .on('play', function(evt){MP4.onPlay(evt, o.vid);})
-                        .on('pause', function(evt){MP4.onPause(evt, o.vid);})
-                        .on('loadstart', function(evt){MP4.onLoadstart(evt, o.vid);})
-                        .on('suspend', function(evt){MP4.onSuspend(evt, o.vid);})
-                        .on('progress', function(evt){MP4.onProgress(evt, o.vid);})
-                        .on('timeupdate', function(evt){MP4.onTimeupdate(evt, o.vid);})
-                        .on('error', function(evt){MP4.onError(evt, o.vid);});
+                        .on('play', function(evt){MP4.onPlay(evt, o);})
+                        .on('pause', function(evt){MP4.onPause(evt, o);})
+                        .on('loadstart', function(evt){MP4.onLoadstart(evt, o);})
+                        .on('suspend', function(evt){MP4.onSuspend(evt, o);})
+                        .on('progress', function(evt){MP4.onProgress(evt, o);})
+                        .on('timeupdate', function(evt){MP4.onTimeupdate(evt, o);})
+                        .on('error', function(evt){MP4.onError(evt, o);});
                 });
 
             });
