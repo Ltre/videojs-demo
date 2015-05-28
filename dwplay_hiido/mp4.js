@@ -5,19 +5,6 @@
     return {
         cf: ua.ios ? "ios" : "html5", // "ios" | "html5"
 
-        __serialize: function(json){
-            var ret = '';
-            var i = 0;
-            $.each(json, function(k, v) {
-                var glue = (0 == i ? '' : '&');
-                if ("string" == typeof v || "number" == typeof v) {
-                    ret += (glue + k + '=' + encodeURIComponent(v));
-                }
-                i ++;
-            });
-            return ret;
-        },
-
         __getCookie: function(c_name){
         　　if (document.cookie.length>0){
         　　　　c_start = document.cookie.indexOf(c_name + "=");
@@ -33,7 +20,6 @@
 
         __reportHiido: function(act, evt, info, extra){
             extra = extra || {};
-            var $video = $(evt.currentTarget);
             var url = 'http://stat2.web.yy.com/c.gif'
             var args = {
                 act: act,
@@ -47,14 +33,14 @@
                 ui: this.__getCookie('hiido_ui') || Math.random()
             };
             $.each(extra, function(k,v){ args[k] = v; });
-            url += ('?' + this.__serialize(args));
-            $video.after('<img src="' + url + '" style="display:none;">');
+            url += ('?' + $.param(args));
+            var img = new Image();
+            img.src = url;
         },
 
-        __reportDwPlatform: function(act, evt, info, extra, fn){
+        __reportDwPlatform: function(act, info, extra, fn){
             extra = extra || {};
             fn = fn || function(){};
-            $video = $(evt.currentTarget);
             var url = 'http://playstats.v.duowan.com/index.php';
             var args = {
                 r: act,
@@ -64,9 +50,9 @@
                 source_url: window.location.href  /*play/do非必需参数*/
             };
             $.each(extra, function(k,v){ args[k] = v; });
-            url += ('?' + this.__serialize(args));
-            $video.after('<iframe src="' + url + '" style="display:none;width:1px;height:1px;"><iframe>');//适配text/html,不用script
-            //$.get(url, {}, fn, 'script');
+            url += ('?' + $.param(args));
+            var img = new Image();
+            img.src = url;
         },
 
         getInfo: function(vid, callback){
