@@ -37,7 +37,7 @@
             var url = 'http://stat2.web.yy.com/c.gif'
             var args = {
                 act: act,
-                channel: info.channelId,
+                channel: info.channelId || '',
                 lp: window.location.href,
                 vid: info.vid,
                 source: info.from || 'default',

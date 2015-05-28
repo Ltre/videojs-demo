@@ -2,7 +2,7 @@
     var $ = require("jquery");
     var UA = require("./ua"), MP4 = require("./mp4");
 
-    function getFlash() {
+    function getByFlash() {
         var result = [];
 
         function add(jqFlash, val) {
@@ -22,12 +22,13 @@
                     vu: vals.vu,
                     channelId: vals.channelId,
                     height: vals.height,
-                    width: vals.width
+                    width: vals.width,
+                    title: ''
                 };
                 //需确认此处是否为同步获取
                 MP4.getInfo(vals.vid, function(info){
                     utilData.title = info.title;
-                    utilData.channel_id = info.channel_id;//若接口有channel_id，则以此为准，否则以页面为准
+                    utilData.channelId = info.channel_id;//若接口有channel_id，则以此为准，否则以页面为准
                 });
                 result.push(utilData);
             }
@@ -73,35 +74,65 @@
         return result;
     }
 
+    function getByVideo(callback){
+        $('video').each(function(i,e){
+            var p = $(e).attr('poster');
+            var vid = p.split('/')[p.split('/').length - 2];
+            MP4.getInfo(vid, function(info){
+                var o = {
+                    vid: vid,
+                    channelId: info.channel_id || '',
+                    title: info.title || '',
+                    from: ''
+                };
+                callback(o);
+            });
+        });
+    }
+
+    function playerBind(elemID, o){
+        $('#' + elemID)
+            .on('play', function(evt){MP4.onPlay(evt, o);})
+            .on('pause', function(evt){MP4.onPause(evt, o);})
+            .on('loadstart', function(evt){MP4.onLoadstart(evt, o);})
+            .on('suspend', function(evt){MP4.onSuspend(evt, o);})
+            .on('progress', function(evt){MP4.onProgress(evt, o);})
+            .on('timeupdate', function(evt){MP4.onTimeupdate(evt, o);})
+            .on('error', function(evt){MP4.onError(evt, o);});
+    }
+
     //Main Function
     exports.run = function(){
         if (UA.ios || UA.android) {
-            $.each(getFlash(), function(i, o) {
-                MP4.getSource({
-                    vid: o.vid
-                }, function(src, cover) {
+            var infos = getByFlash();
 
-                    var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
-                    if (o.jq) { /*对应上面的way1或way2解析方式*/
-                        var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
-                        jqFlash.replaceWith('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
-                    } else { /*对应上面way3的解析方式*/
-                        var $container = $('#' + window.dwVideoContainerId);//这个全局变量是从多玩专区播放页拿到的
-                        var width = o.width || "610", height = o.height || "498";
-                        $container.html('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
-                    }
-                    
-                    $('#' + elemID)
-                        .on('play', function(evt){MP4.onPlay(evt, o);})
-                        .on('pause', function(evt){MP4.onPause(evt, o);})
-                        .on('loadstart', function(evt){MP4.onLoadstart(evt, o);})
-                        .on('suspend', function(evt){MP4.onSuspend(evt, o);})
-                        .on('progress', function(evt){MP4.onProgress(evt, o);})
-                        .on('timeupdate', function(evt){MP4.onTimeupdate(evt, o);})
-                        .on('error', function(evt){MP4.onError(evt, o);});
+            if (infos.length > 0) { /*先考虑常规嵌入FLASH的情况*/
+
+                $.each(infos, function(i, o) {
+                    MP4.getSource({
+                        vid: o.vid
+                    }, function(src, cover) {
+                        var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
+                        if (o.jq) { /*对应上面的way1或way2解析方式*/
+                            var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
+                            jqFlash.replaceWith('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+                        } else { /*对应上面way3的解析方式*/
+                            var $container = $('#' + window.dwVideoContainerId);//这个全局变量是从多玩专区播放页拿到的
+                            var width = o.width || "610", height = o.height || "498";
+                            $container.html('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+                        }
+                        playerBind(elemID, o);
+                    });
                 });
 
-            });
+            } else { /*后考虑完全没有FLASH的情况*/
+
+                getByVideo(function(o){
+                    var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
+                    playerBind(elemID, o);
+                });
+
+            }
         }
     };
 
