@@ -92,10 +92,6 @@
             this.__reportDwPlatform('play/do', evt, info);
         },
 
-        onPause: function(evt, info){
-            console.log('dwH5 pause');
-        },
-
         onLoadstart: function(evt, info){
             console.log('dwH5 loadstart');
             var _this = this;
@@ -103,22 +99,6 @@
                 _this.__reportHiido('webduowanvideoload', evt, info);
                 _this.__reportDwPlatform('play/load', evt, info);
             }, 250);//确保比getInfo()晚执行
-        },
-
-        onSuspend: function(evt, info){
-            console.log('dwH5 suspend');
-        },
-
-        onProgress: function(evt, info){
-            console.log('dwH5 progress readyState=' + evt.currentTarget.readyState);
-        },
-
-        onTimeupdate: function(evt, info){
-            console.log('dwH5 timeupdate');
-        },
-
-        onError: function(evt, info){
-            console.log('dwH5 error');
         }
 
     };

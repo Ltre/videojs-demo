@@ -93,12 +93,7 @@
     function playerBind(elemID, o){
         $('#' + elemID)
             .on('play', function(evt){MP4.onPlay(evt, o);})
-            .on('pause', function(evt){MP4.onPause(evt, o);})
-            .on('loadstart', function(evt){MP4.onLoadstart(evt, o);})
-            .on('suspend', function(evt){MP4.onSuspend(evt, o);})
-            .on('progress', function(evt){MP4.onProgress(evt, o);})
-            .on('timeupdate', function(evt){MP4.onTimeupdate(evt, o);})
-            .on('error', function(evt){MP4.onError(evt, o);});
+            .on('loadstart', function(evt){MP4.onLoadstart(evt, o);});
     }
 
     //Main Code
