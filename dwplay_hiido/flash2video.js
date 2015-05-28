@@ -101,39 +101,38 @@
             .on('error', function(evt){MP4.onError(evt, o);});
     }
 
-    //Main Function
-    exports.run = function(){
-        if (UA.ios || UA.android) {
-            var infos = getByFlash();
+    //Main Code
+    if (UA.ios || UA.android) {
+        var infos = getByFlash();
 
-            if (infos.length > 0) { /*先考虑常规嵌入FLASH的情况*/
+        if (infos.length > 0) { /*先考虑常规嵌入FLASH的情况*/
 
-                $.each(infos, function(i, o) {
-                    MP4.getSource({
-                        vid: o.vid
-                    }, function(src, cover) {
-                        var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
-                        if (o.jq) { /*对应上面的way1或way2解析方式*/
-                            var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
-                            jqFlash.replaceWith('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
-                        } else { /*对应上面way3的解析方式*/
-                            var $container = $('#' + window.dwVideoContainerId);//这个全局变量是从多玩专区播放页拿到的
-                            var width = o.width || "610", height = o.height || "498";
-                            $container.html('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
-                        }
-                        playerBind(elemID, o);
-                    });
-                });
-
-            } else { /*后考虑完全没有FLASH的情况*/
-
-                getByVideo(function(o){
+            $.each(infos, function(i, o) {
+                MP4.getSource({
+                    vid: o.vid
+                }, function(src, cover) {
                     var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
+                    if (o.jq) { /*对应上面的way1或way2解析方式*/
+                        var jqFlash = o.jq, width = jqFlash.attr("width") || jqFlash.width() || "610", height = jqFlash.attr("height") || jqFlash.height() || "498";
+                        jqFlash.replaceWith('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+                    } else { /*对应上面way3的解析方式*/
+                        var $container = $('#' + window.dwVideoContainerId);//这个全局变量是从多玩专区播放页拿到的
+                        var width = o.width || "610", height = o.height || "498";
+                        $container.html('<video id="' + elemID + '" width="' + width + '" height="' + height + '" preload="meta" poster="' + cover + '" controls><source src="' + src + '" type="video/mp4">您的浏览器不支持 video 标签</video>');
+                    }
                     playerBind(elemID, o);
                 });
+            });
 
-            }
+        } else { /*后考虑完全没有FLASH的情况*/
+
+            getByVideo(function(o){
+                var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
+                playerBind(elemID, o);
+            });
+
         }
-    };
+    }
+    
 
 });
