@@ -4,6 +4,8 @@
 
     return {
 
+        __playCount: {/*vid:count*/},
+
         __getCookie: function(c_name){
         　　if (document.cookie.length>0){
         　　　　c_start = document.cookie.indexOf(c_name + "=");
@@ -59,7 +61,8 @@
             var url = 'http://playapi.v.duowan.com/index.php?r=play/baseinfo&vid=' + vid;
             $.ajax({
                 url: url,
-                dataType: 'jsonp'
+                dataType: 'jsonp',
+                async: false
             }).done(function(d){
                 if (d && callback) {
                     callback(d);
@@ -86,8 +89,13 @@
         },
 
         onPlay: function(evt, info){
-            this.__reportHiido('webduowanvideo', info);
-            this.__reportDwPlatform('play/do', info);
+            if (this.__playCount[info.vid]) {
+                this.__playCount[info.vid] ++;
+            } else {
+                this.__playCount[info.vid] = 1;
+                this.__reportHiido('webduowanvideo', info);
+                this.__reportDwPlatform('play/do', info);
+            }
         },
 
         onLoadstart: function(evt, info){

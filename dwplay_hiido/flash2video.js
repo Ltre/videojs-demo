@@ -97,7 +97,7 @@
     }
 
     //Main Code
-    if (UA.ios || UA.android) {
+    if (UA.ios || UA.ipad || UA.android) {
         var infos = getByFlash();
 
         if (infos.length > 0) { /*先考虑常规嵌入FLASH的情况*/
