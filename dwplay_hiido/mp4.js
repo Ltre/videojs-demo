@@ -33,7 +33,7 @@
                 ui: this.__getCookie('hiido_ui') || Math.random()
             };
             $.each(extra, function(k,v){ args[k] = v; });
-            url += ('?' + $.param(args));
+            url += ('?' + $.param(args, true));
             var img = new Image();
             img.src = url;
         },
@@ -50,7 +50,7 @@
                 source_url: window.location.href  /*play/do非必需参数*/
             };
             $.each(extra, function(k,v){ args[k] = v; });
-            url += ('?' + $.param(args));
+            url += ('?' + $.param(args, true));
             var img = new Image();
             img.src = url;
         },
