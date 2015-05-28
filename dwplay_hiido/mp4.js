@@ -3,7 +3,6 @@
     var ua = require("./ua");
 
     return {
-        cf: ua.ios ? "ios" : "html5", // "ios" | "html5"
 
         __getCookie: function(c_name){
         　　if (document.cookie.length>0){
@@ -18,7 +17,7 @@
         　　return "";
         },
 
-        __reportHiido: function(act, evt, info, extra){
+        __reportHiido: function(act, info, extra){
             extra = extra || {};
             var url = 'http://stat2.web.yy.com/c.gif'
             var args = {
@@ -87,17 +86,15 @@
         },
 
         onPlay: function(evt, info){
-            console.log('dwH5 play');
-            this.__reportHiido('webduowanvideo', evt, info);
-            this.__reportDwPlatform('play/do', evt, info);
+            this.__reportHiido('webduowanvideo', info);
+            this.__reportDwPlatform('play/do', info);
         },
 
         onLoadstart: function(evt, info){
-            console.log('dwH5 loadstart');
             var _this = this;
             setTimeout(function(){
-                _this.__reportHiido('webduowanvideoload', evt, info);
-                _this.__reportDwPlatform('play/load', evt, info);
+                _this.__reportHiido('webduowanvideoload', info);
+                _this.__reportDwPlatform('play/load', info);
             }, 250);//确保比getInfo()晚执行
         }
 
