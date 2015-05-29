@@ -6,6 +6,8 @@
 
         __playCount: {/*vid:count*/},
 
+        __infoGet: {/*vid:boolean*/},
+
         __getCookie: function(c_name){
         　　if (document.cookie.length>0){
         　　　　c_start = document.cookie.indexOf(c_name + "=");
@@ -58,14 +60,15 @@
 
         getInfo: function(vid, callback){
             if (! vid) return;
+            var _this = this;
             var url = 'http://playapi.v.duowan.com/index.php?r=play/baseinfo&vid=' + vid;
             $.ajax({
                 url: url,
-                dataType: 'jsonp',
-                async: false
+                dataType: 'jsonp'
             }).done(function(d){
                 if (d && callback) {
                     callback(d);
+                    _this.__infoGet[vid] = true;//确保触发loadstart
                 }
             });
         },
@@ -100,10 +103,14 @@
 
         onLoadstart: function(evt, info){
             var _this = this;
-            setTimeout(function(){
-                _this.__reportHiido('webduowanvideoload', info);
-                _this.__reportDwPlatform('play/load', info);
-            }, 250);//确保比getInfo()晚执行
+            var iv = setInterval(function(){
+                if (_this.__infoGet[info.vid]) {
+                    clearInterval(iv);
+                    _this.__reportHiido('webduowanvideoload', info);
+                    _this.__reportDwPlatform('play/load', info);
+                    //alert('loadstart!!! vid is ' + info.vid);
+                }
+            }, 100);
         }
 
     };

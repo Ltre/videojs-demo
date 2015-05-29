@@ -58,7 +58,7 @@
         var pcf = window.player_conf;
         if (pcf && 'object' == typeof pcf) {
             if (pcf.vid) {
-                result.push({
+                var utilData = {
                     jq: null,
                     vid: pcf.vid,
                     from: pcf.from || "",
@@ -67,7 +67,12 @@
                     channelId: pcf.channelId || "",
                     height: pcf.height,
                     width: pcf.width
+                };
+                MP4.getInfo(pcf.vid, function(info){
+                    utilData.title = info.title;
+                    utilData.channelId = info.channel_id;//若接口有channel_id，则以此为准，否则以页面为准
                 });
+                result.push(utilData);
             }
         }
 
@@ -99,7 +104,6 @@
     //Main Code
     if (UA.ios || UA.ipad || UA.android) {
         var infos = getByFlash();
-
         if (infos.length > 0) { /*先考虑常规嵌入FLASH的情况*/
 
             $.each(infos, function(i, o) {
