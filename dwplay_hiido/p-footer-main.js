@@ -4,6 +4,4 @@
  * to
  * http://172.16.43.111/webstorm/videojs-demo/dwPlay_hiido/p-footer-main.js
  */
-seajs.use(['http://172.16.43.111/webstorm/videojs-demo/dwplay_hiido/flash2video'], function(F2V){
-    F2V.run();
-});
+seajs.use(['http://172.16.43.111/webstorm/videojs-demo/dwplay_hiido/flash2video']);

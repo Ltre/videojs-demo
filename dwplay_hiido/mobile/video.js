@@ -1,8 +1,10 @@
-﻿define(function(require) {
-    var $ = require("jquery");
-    var ua = require("./ua");
+﻿define(function(require, exports) {
 
-    return {
+    //var $ = require("http://assets.dwstatic.com/mobile/src/js/main/zepto/zepto.min.js");
+	var $ = require("zepto");
+	
+	
+    var MP4 = {
 
         __playCount: {/*vid:count*/},
 
@@ -62,25 +64,18 @@
             if (! vid) return;
             var _this = this;
             var url = 'http://playapi.v.duowan.com/index.php?r=play/baseinfo&vid=' + vid;
-            $.ajax({
-                url: url,
-                dataType: 'jsonp'
-            }).done(function(d){
+			$.get(url, function(d){
                 if (d && callback) {
                     callback(d);
                     _this.__infoGet[vid] = true;//确保触发loadstart
-                }
-            });
+                }			
+			}, 'jsonp');
         },
 
         getSource: function(data, callback) {
             if (! data) return;
             var url = "http://playapi.v.duowan.com/index.php?r=play/video";//http://upapi.v.duowan.com/index.php?r=app/video&vid=
-            $.ajax({
-                url: url,
-                dataType: "jsonp",
-                data: data
-            }).done(function(d){
+			$.get(url, data, function(d){
                 if (1 != d.code) return;
                 var last = d.result.items.shift();
                 var cover = d.result.cover;
@@ -88,7 +83,7 @@
                     var src = last.transcode.urls.shift();
                     callback(src, cover, data);
                 }
-            });
+			}, 'jsonp');
         },
 
         onPlay: function(evt, info){
@@ -114,4 +109,31 @@
         }
 
     };
+	
+	
+	
+    function getByVideo(callback){
+        $('video').each(function(i,e){
+            var p = $(e).attr('poster');
+            var vid = p.split('/')[p.split('/').length - 2];
+            MP4.getInfo(vid, function(info){
+                var info = {
+                    vid: vid,
+                    channelId: info.channel_id || '',
+                    title: info.title || '',
+                    from: ''
+                };
+                callback(info, e);
+            });
+        });
+    }
+	
+	
+
+    //Main Code
+    getByVideo(function(info, e){
+        $(e).on('play', function(evt){MP4.onPlay(evt, info);});
+        MP4.onLoadstart(undefined, info);
+    });
+
 });

@@ -126,6 +126,7 @@
         } else { /*后考虑完全没有FLASH的情况*/
 
             getByVideo(function(o){
+                console.log(o);
                 var elemID = (new Date().getUTCMilliseconds() + '_' + o.vid);
                 playerBind(elemID, o);
             });
