@@ -24,7 +24,8 @@
          *      5、默认值：defaultweb | defaultwap
          */
         __getLaiyuanv3: function(info){
-            var vfrom = location.search.match(/[\?\&]vfrom=([^\?\&=]*)/);
+            debugger;
+            var vfrom = (location.search.match(/[\?\&]vfrom=([^\?\&=]*(web|wap)$)/) || [,])[1];
             if (vfrom) {
                 document.cookie = 'vfrom=' + vfrom;
             } else {
@@ -32,12 +33,21 @@
             }
             if (! vfrom) vfrom = info.from;
             if (! vfrom) {
-                switch (location.host) {
-                    case 'v.huya.com':
-                    case 'm.v.huya.com':
-                    case 'duowan.cn':
-                    default:
-                        vfrom = (UA.ios || UA.ipad || UA.android) ? 'defaultwap' : 'defaultweb';
+                var isWap = UA.ios || UA.ipad || UA.android;
+                if (location.host.match(/v\.huya\.com$/)) {
+                    vfrom = isWap ? 'vhuyawap' : 'vhuyaweb';
+                } else if (location.host.match(/(^bbs\.)duowan\.(com|cn)$/)) {
+                    vfrom = isWap ? 'duowanwap' : 'duowanweb';
+                } else if (location.host.match(/5253\.com$/)) {
+                    vfrom = isWap ? '5253wap' : '5253web';
+                } else if (location.host.match(/bbs\.duowan\.com$/)) {
+                    vfrom = isWap ? 'bbswap' : 'bbsweb';
+                } else if (location.host.match(/(weibo|sina)\.(com|cn)+$/)) {
+                    vfrom = isWap ? 'weibowap' : 'weiboweb';
+                } else if (location.host.match(/lolshipin\.com$/)) {
+                    vfrom = isWap ? 'mumuwap' : 'mumuweb';
+                } else {
+                    vfrom = isWap ? 'defaultwap' : 'defaultweb';
                 }
             }
             return vfrom;
