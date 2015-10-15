@@ -8,28 +8,51 @@
 
         __infoGet: {/*vid:boolean*/},
 
-        __getCookie: function(c_name){
-        　　if (document.cookie.length>0){
-        　　　　c_start = document.cookie.indexOf(c_name + "=");
-        　　　　if (c_start != -1){ 
-        　　　　　　c_start = c_start + c_name.length + 1;
-        　　　　　　c_end = document.cookie.indexOf(";", c_start);
-        　　　　　　if (c_end == -1) c_end = document.cookie.length;　　
-        　　　　　　return unescape(document.cookie.substring(c_start, c_end));
-        　　　　} 
-        　　}
-        　　return "";
+        __getCookie: function(name) {
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) return decodeURI(arr[2]);
+            return null;
+        },
+        
+        /**
+         * 与海度协商好的播放来源参数
+         * 取值优先级：
+         *      1、播放页地址的vfrom参数
+         *      2、COOKIE.vfrom
+         *      3、FLASH的from参数
+         *      4、域名
+         *      5、默认值：defaultweb | defaultwap
+         */
+        __getLaiyuanv3: function(info){
+            var vfrom = location.search.match(/[\?\&]vfrom=([^\?\&=]*)/);
+            if (vfrom) {
+                document.cookie = 'vfrom=' + vfrom;
+            } else {
+                vfrom = this.__getCookie('vfrom');
+            }
+            if (! vfrom) vfrom = info.from;
+            if (! vfrom) {
+                switch (location.host) {
+                    case 'v.huya.com':
+                    case 'm.v.huya.com':
+                    case 'duowan.cn':
+                    default:
+                        vfrom = (UA.ios || UA.ipad || UA.android) ? 'defaultwap' : 'defaultweb';
+                }
+            }
+            return vfrom;
         },
 
         __reportHiido: function(act, info, extra){
             extra = extra || {};
-            var url = 'http://stat2.web.yy.com/c.gif'
+            var url = 'http://stat2.web.yy.com/c.gif';
+            
             var args = {
                 act: act,
                 channel: info.channelId || '',
                 lp: window.location.href,
                 vid: info.vid,
-                source: info.from || 'default',
+                laiyuanv3: this.__getLaiyuanv3(info),
                 vname: info.title,
                 time: new Date().valueOf(),
                 prevurl: window.location.origin,
