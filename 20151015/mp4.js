@@ -32,24 +32,23 @@
             } else {
                 vfrom = this.__getCookie('vfrom');
             }
-            if (! vfrom) {
-                vfrom = (info.from || '').replace(/(\w+)(web|wap)$/, isWap ? '$1wap' : '$1web');
-            }
+            if (! vfrom) vfrom = info.from || '';
+            if (! vfrom.match(/\w+wap/)) vfrom = '';//遇到非wap结尾，丢弃
             if (! vfrom) {
                 if (location.host.match(/v\.huya\.com$/)) {
-                    vfrom = isWap ? 'vhuyawap' : 'vhuyaweb';
+                    vfrom = 'vhuyawap';
                 } else if (location.host.match(/(^bbs\.)duowan\.(com|cn)$/)) {
-                    vfrom = isWap ? 'duowanwap' : 'duowanweb';
+                    vfrom = 'duowanwap';
                 } else if (location.host.match(/5253\.com$/)) {
-                    vfrom = isWap ? '5253wap' : '5253web';
+                    vfrom = '5253wap';
                 } else if (location.host.match(/bbs\.duowan\.com$/)) {
-                    vfrom = isWap ? 'bbswap' : 'bbsweb';
+                    vfrom = 'bbswap';
                 } else if (location.host.match(/(weibo|sina)\.(com|cn)+$/)) {
-                    vfrom = isWap ? 'weibowap' : 'weiboweb';
+                    vfrom = 'weibowap';
                 } else if (location.host.match(/lolshipin\.com$/)) {
-                    vfrom = isWap ? 'mumuwap' : 'mumuweb';
+                    vfrom = 'mumuwap';
                 } else {
-                    vfrom = isWap ? 'defaultwap' : 'defaultweb';
+                    vfrom = 'defaultwap';
                 }
             }
             return vfrom;

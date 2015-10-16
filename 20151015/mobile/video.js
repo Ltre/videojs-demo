@@ -10,17 +10,10 @@
 
         __infoGet: {/*vid:boolean*/},
 
-        __getCookie: function(c_name){
-        　　if (document.cookie.length>0){
-        　　　　c_start = document.cookie.indexOf(c_name + "=");
-        　　　　if (c_start != -1){ 
-        　　　　　　c_start = c_start + c_name.length + 1;
-        　　　　　　c_end = document.cookie.indexOf(";", c_start);
-        　　　　　　if (c_end == -1) c_end = document.cookie.length;　　
-        　　　　　　return unescape(document.cookie.substring(c_start, c_end));
-        　　　　} 
-        　　}
-        　　return "";
+        __getCookie: function(name) {
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) return decodeURI(arr[2]);
+            return null;
         },
 
         /**
@@ -34,13 +27,14 @@
          */
         __getLaiyuanv3: function(info){
             debugger;
-            var vfrom = (location.search.match(/[\?\&]vfrom=([^\?\&=]*(web|wap)$)/) || [,])[1];
+            var vfrom = (location.search.match(/[\?\&]vfrom=(\w+(web|wap)$)/) || [,])[1];
             if (vfrom) {
                 document.cookie = 'vfrom=' + vfrom;
             } else {
                 vfrom = this.__getCookie('vfrom');
             }
             if (! vfrom) vfrom = info.from;
+            if (! vfrom.match(/\w+wap$/)) vfrom = '';//忽略非wap结尾
             if (! vfrom) {
                 if (location.host.match(/v\.huya\.com$/)) {
                     vfrom = 'vhuyawap';
