@@ -25,15 +25,17 @@
          */
         __getLaiyuanv3: function(info){
             debugger;
-            var vfrom = (location.search.match(/[\?\&]vfrom=([^\?\&=]*(web|wap)$)/) || [,])[1];
+            var isWap = ua.ios || ua.ipad || ua.android;
+            var vfrom = (location.search.match(/[?&]vfrom=(\w+(web|wap)$)/) || [,''])[1];
             if (vfrom) {
                 document.cookie = 'vfrom=' + vfrom;
             } else {
                 vfrom = this.__getCookie('vfrom');
             }
-            if (! vfrom) vfrom = info.from;
             if (! vfrom) {
-                var isWap = UA.ios || UA.ipad || UA.android;
+                vfrom = (info.from || '').replace(/(\w+)(web|wap)$/, isWap ? '$1wap' : '$1web');
+            }
+            if (! vfrom) {
                 if (location.host.match(/v\.huya\.com$/)) {
                     vfrom = isWap ? 'vhuyawap' : 'vhuyaweb';
                 } else if (location.host.match(/(^bbs\.)duowan\.(com|cn)$/)) {
