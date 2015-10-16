@@ -1,7 +1,7 @@
 ﻿define(function(require, exports) {
 
-    //var $ = require("http://assets.dwstatic.com/mobile/src/js/main/zepto/zepto.min.js");
-	var $ = require("zepto");
+    var $ = require("http://assets.dwstatic.com/mobile/src/js/main/zepto/zepto.min.js");
+	//var $ = require("zepto");
 	
 	
     var MP4 = {
@@ -42,21 +42,20 @@
             }
             if (! vfrom) vfrom = info.from;
             if (! vfrom) {
-                var isWap = UA.ios || UA.ipad || UA.android;
                 if (location.host.match(/v\.huya\.com$/)) {
-                    vfrom = isWap ? 'vhuyawap' : 'vhuyaweb';
+                    vfrom = 'vhuyawap';
                 } else if (location.host.match(/(^bbs\.)duowan\.(com|cn)$/)) {
-                    vfrom = isWap ? 'duowanwap' : 'duowanweb';
+                    vfrom = 'duowanwap';
                 } else if (location.host.match(/5253\.com$/)) {
-                    vfrom = isWap ? '5253wap' : '5253web';
+                    vfrom = '5253wap';
                 } else if (location.host.match(/bbs\.duowan\.com$/)) {
-                    vfrom = isWap ? 'bbswap' : 'bbsweb';
+                    vfrom = 'bbswap';
                 } else if (location.host.match(/(weibo|sina)\.(com|cn)+$/)) {
-                    vfrom = isWap ? 'weibowap' : 'weiboweb';
+                    vfrom = 'weibowap';
                 } else if (location.host.match(/lolshipin\.com$/)) {
-                    vfrom = isWap ? 'mumuwap' : 'mumuweb';
+                    vfrom = 'mumuwap';
                 } else {
-                    vfrom = isWap ? 'defaultwap' : 'defaultweb';
+                    vfrom = 'defaultwap';
                 }
             }
             return vfrom;
