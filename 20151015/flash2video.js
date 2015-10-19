@@ -94,16 +94,19 @@
 
     function getByVideo(callback){
         $('video').each(function(i,e){
-            var p = $(e).attr('poster');
-            var vid = p.split('/')[p.split('/').length - 2];
+            var vid = $(e).data('vid');
+            if (! vid) {
+	            var p = $(e).attr('poster');
+	            vid = p.split('/')[p.split('/').length - 2];//vimg.dwstatic.com/1523/{vid}/3.jpg
+            }
             MP4.getInfo(vid, function(info){
-                var o = {
+                var info = {
                     vid: vid,
                     channelId: info.channel_id || '',
                     title: info.title || '',
                     from: ''
                 };
-                callback(o);
+                callback(info, e);
             });
         });
     }
