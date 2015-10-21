@@ -2,8 +2,7 @@
 
     var $ = require("http://assets.dwstatic.com/mobile/src/js/main/zepto/zepto.min.js");
 	//var $ = require("zepto");
-	
-	
+
     var MP4 = {
 
         __playCount: {/*vid:count*/},
@@ -26,8 +25,10 @@
          *      5、默认值：defaultweb | defaultwap
          */
         __getLaiyuanv3: function(info){
-            debugger;
             var vfrom = (location.search.match(/[\?\&]vfrom=(\w+(web|wap)$)/) || [,])[1];
+            if (! vfrom) {
+             	vfrom = (location.hash.match(/[^\w]*vfrom=(\w+(web|wap)$)/) || [,])[1];
+            }
             if (vfrom) {
                 document.cookie = 'vfrom=' + vfrom;
             } else {

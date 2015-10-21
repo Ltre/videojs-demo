@@ -1,6 +1,5 @@
 ﻿define(function(require) {
     var $ = require("jquery");
-    var ua = require("./ua");
 
     return {
 
@@ -24,10 +23,10 @@
          *      5、默认值：defaultweb | defaultwap
          */
         __getLaiyuanv3: function(info){
-            debugger;
-            var isWap = ua.ios || ua.ipad || ua.android;
-            //var vfrom = (location.search.match(/[?&]vfrom=(\w+(web|wap)$)/) || [,''])[1];
-            var vfrom = (location.hash.match(/[^\w]*vfrom=(\w+(web|wap)$)/) || [,])[1];
+            var vfrom = (location.search.match(/[\?\&]vfrom=(\w+(web|wap)$)/) || [,])[1];
+            if (! vfrom) {
+                vfrom = (location.hash.match(/[^\w]*vfrom=(\w+(web|wap)$)/) || [,])[1];
+            }
             if (vfrom) {
                 document.cookie = 'vfrom=' + vfrom;
             } else {
