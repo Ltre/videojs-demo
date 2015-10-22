@@ -30,7 +30,7 @@
              	vfrom = (location.hash.match(/[^\w]*vfrom=(\w+(web|wap)$)/) || [,])[1];
             }
             if (vfrom) {
-                document.cookie = 'vfrom=' + vfrom;
+                document.cookie = 'vfrom=' + vfrom + '; path=/';
             } else {
                 vfrom = this.__getCookie('vfrom');
             }
